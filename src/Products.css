@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+}
+.products_container {
+    width: 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+}
+
+.rarity_fiter {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter_title {
+    font-size: 2rem;
+    margin: 15px;
+}
+
+.items_container {
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.item_box {
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+div.item_description {
+    width: 320px;
+}
+
+/* .item_description:hover {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+} */
+
+img {
+    width: 300px;
+    aspect-ratio: 1;
+}
+
+.btn_addItem {
+    cursor: pointer;
+    margin-top: auto;
+    width: 250px;
+    border: lightblue 2px solid;
+}
+
+button.filter_selector {
+    cursor: pointer;
+}
+
+button.filter_selector:active {
+    border: #1f7057 solid 1px;
+}
+
+.epic {
+    background-color: gold;
+}
+.rare {
+    background-color: purple;
+}
+.uncommon {
+    background-color: green;
+}
+.gaminglegends {
+    background-color: teal;
+}
+
+.epic, .rare, .uncommon, .gaminglegends {
+    font-size: 1.5rem;
+    color: white;
+}

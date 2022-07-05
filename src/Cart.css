@@ -1,0 +1,86 @@
+.cart_title,.empty_cart {
+    font-size: 2rem;
+    text-align: center;
+    
+    margin: 50px 0;
+}
+
+.single_item_container, .cart_header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    grid-auto-flow: row;
+    border-bottom: #ddd9d7 2px solid;
+}
+
+.single_item_container {
+    margin: 70px 0;
+}
+
+.cart_header{
+    border-bottom: skyblue 5px solid;
+    font-size: 2rem;
+}
+
+.cart_item_details{
+    font-size: 1.2rem;
+}
+
+img.item {
+    width: 150px;
+    aspect-ratio: 1;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 15px;
+}
+
+.Epic {
+    background-color: gold;
+}
+.Rare {
+    background-color: purple;
+}
+
+.Uncommon {
+    background-color: green;
+}
+.Gaminglegends {
+    background-color: teal;
+}
+
+.Epic, .Rare, Uncommon, .Gaminglegends {
+    color: white;
+}
+
+.qty_container{
+    font-size: 2.5rem;
+    display: flex;
+    align-items: center;
+} 
+
+button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+}
+
+img.change_qty{
+    width: 40px;
+    aspect-ratio: 1;
+}
+
+.checkout_total, .checkout {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 2rem;
+    margin: 50px 80px;
+}
+
+button.checkout_btn {
+    font-size: 2.5rem;
+    padding: 15px 25px;
+    border: #1f7057 2px solid;
+    color: #1f7057;
+}
