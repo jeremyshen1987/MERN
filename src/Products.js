@@ -95,9 +95,9 @@ const Products = (props) => {
 
   return (
     
-    <div className="products_container">
+    <main className="products_container">
 
-      <div className="sidebar">
+      <aside className="sidebar">
         <div className="rarity_fiter">
           <div className="filter_title">Rarity</div>
           <button className="filter_selector" onClick={() => setRaritySelector('all')}>All</button>
@@ -105,7 +105,7 @@ const Products = (props) => {
           <button className="filter_selector" onClick={() => setRaritySelector('rare')}>Rare</button>
           <button className="filter_selector" onClick={() => setRaritySelector('uncommon')}>Uncommon</button>
         </div>
-      </div>
+      </aside>
 
 
       <div className="items_container">
@@ -124,7 +124,7 @@ const Products = (props) => {
       </div>
 
 
-    </div>
+    </main>
   );
 };
   

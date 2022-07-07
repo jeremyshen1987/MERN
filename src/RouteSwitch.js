@@ -17,7 +17,7 @@ const RouteSwitch = () => {
     
     <BrowserRouter>
 
-      <Header qty={cart.length}/>
+      <Header cart={cart}/>
 
       <Routes>
         <Route path="/" element={<App />} />
