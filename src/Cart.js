@@ -65,6 +65,24 @@ const Cart = (props) => {
         })
     }
 
+    async function pay(data){
+        
+        const res_POST = await fetch('http://localhost:5000/test', {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
+        const response = await res_POST.json()
+
+        console.log(response)
+        console.log('cart items sent')
+
+    }
+
     return(
 
         <div>
@@ -115,7 +133,7 @@ const Cart = (props) => {
             </div>
 
             <div className="checkout">
-                {cartQty === 0 ? '' : <button className="checkout_btn">PAY</button>} 
+                {cartQty === 0 ? '' : <button className="checkout_btn" onClick={() => pay(props.cart)}>PAY</button>} 
             </div>
 
         </div>

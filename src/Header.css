@@ -81,16 +81,16 @@ img.cart_icon {
     padding: 30px;
     line-height: normal;
     z-index: 10;
-    top: 0;
+    top: 15%;
     right: -20%;
     transition: transform .5s ease-in-out, opacity .5s ease;
-    transform: translate(30%, 0);
+    transform: translate(40%, 0);
     overflow: scroll;
 }
 
 .mini_cart.open {
     opacity: 1;
-    transform: translate(-75%, 0);
+    transform: translate(-60%, 0);
     overflow-x: hidden;
     overflow-y: scroll;
     height: 100%;
