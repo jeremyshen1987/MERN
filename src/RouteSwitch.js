@@ -14,7 +14,8 @@ const RouteSwitch = () => {
   const [cart, setCart] = useState([])
   const [inventoryCopy, setInventoryCopy] = useState([])
 
-  const [test1, test2] = ['001', '007']
+  const [test1, test2, test3] = ['001', '007', '009']
+
 
   return (
 
