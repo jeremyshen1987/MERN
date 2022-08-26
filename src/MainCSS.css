@@ -1,0 +1,48 @@
+:root {
+    --forestGreen: #1f7057;
+}
+
+body {
+    box-sizing: border-box;
+}
+.register_container {
+    width: 50%;
+    min-height: 500px;
+    border: green 2px solid;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 1fr) .5fr;
+    place-items: center;
+}
+
+h1.registration {
+    margin: 30px auto;
+    text-align: center;
+}
+
+.register_container > * {
+    font-size: 1.2rem;
+    font-weight: 900;
+    padding: 15px;
+}
+
+div.registration, input.registration {
+    width: 100%;
+}
+
+input.registration {
+    min-height: 30px;
+    margin-top: 10px;
+}
+
+button#signup {
+    grid-column: 1 / -1;
+    background-color: var(--forestGreen);
+    color: white;
+    padding: 15px;
+    margin: 8px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
