@@ -97,13 +97,9 @@ export const Register = () => {
         const response = await formPOST.json()
         if(response.error){
 
-            //  const newErrorObj = {errorObj.errorKey: errorValue}
-
             const errorKey = Object.keys(response.error.keyValue)[0]
             
             setError(errorKey)
-
-            // setErrorObj(preVal => {...preVal, preVal.errorKey: errorValue})
             return
         }
 
