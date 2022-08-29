@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import { mainContext } from "./RouteSwitch";
 import './Cart.css'
 
-const Cart = (props) => {
+const Cart = () => {
 
-    const cartQty = props.cart.length
+    const {cart, setCart, authUser} = useContext(mainContext)
 
+    const cartQty = cart.length
     const [priceTotal, setPriceTotal] = useState(0)
 
     useEffect(() => {
@@ -14,19 +16,19 @@ const Cart = (props) => {
             return
         }
 
-        const total = props.cart.reduce((total, nextVal) => {
+        const total = cart.reduce((total, nextVal) => {
 
             return total + nextVal.price * nextVal.qty
         }, 0)
 
         setPriceTotal(total)
   
-    }, [props.cart])
+    }, [cart])
 
 
     function addQty(item){
 
-        props.setCart( preArr => {
+        setCart( preArr => {
 
             const newArr = preArr.map(obj => {
                 if(obj.id === item.id){
@@ -44,7 +46,7 @@ const Cart = (props) => {
 
         if(item.qty === 1){
 
-            props.setCart( preArr => {
+            setCart( preArr => {
                 const newArr = preArr.filter(obj => obj.id !== item.id)
                 return newArr
             })
@@ -52,7 +54,7 @@ const Cart = (props) => {
             return
         }
 
-        props.setCart( preArr => {
+        setCart( preArr => {
 
             const newArr = preArr.map(obj => {
                 if(obj.id === item.id){
@@ -63,6 +65,21 @@ const Cart = (props) => {
 
         return newArr
         })
+    }
+
+    const CheckoutBtn = () => {
+
+        if(authUser.username) {
+            return(
+                <button className="checkout_btn" onClick={() => pay()}>PAY</button>
+            )
+        }
+        else{
+            return(
+                <button disabled className="checkout_btn" onClick={() => pay()}>PAY</button>
+            )
+        }
+
     }
 
     async function pay(data){
@@ -97,7 +114,7 @@ const Cart = (props) => {
             </div>
 
 
-            {props.cart.map(item => {
+            {cart.map(item => {
                 return(
                 <div className="single_item_container" key={item.id}>
 
@@ -133,7 +150,7 @@ const Cart = (props) => {
             </div>
 
             <div className="checkout">
-                {cartQty === 0 ? '' : <button className="checkout_btn" onClick={() => pay(props.cart)}>PAY</button>} 
+                {cartQty === 0 ? '' : <CheckoutBtn />} 
             </div>
 
         </div>

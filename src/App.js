@@ -14,8 +14,9 @@ const App = () => {
         <div>
 
             <h1>Grocery Delivery</h1>
-            <Link to={'/Products'}>Shopping</Link>
-
+            {/* <Link to={'/Products'}>Shopping</Link> */}
+            <Link to={'/register'}>Register</Link>
+            <Link to={'/login'}>Login</Link>
 
         </div>
     )

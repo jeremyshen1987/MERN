@@ -1,11 +1,13 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useContext} from "react";
+import { Link} from "react-router-dom";
 import './Header.css'
+import { mainContext } from "./RouteSwitch";
 
-const Header = (props) => {
+const Header = () => {
+
+    const {authUser, setAuthUser, cart, setCart}  = useContext(mainContext)
 
     const miniCartElement = document.querySelector('.mini_cart')
-
     function showMiniCart(e){
         
         miniCartElement.classList.add('open')
@@ -18,7 +20,7 @@ const Header = (props) => {
     function miniCart(){
 
         return(
-            props.cart.map(item => {
+            cart.map(item => {
                 return(
                     <aside className="mini_cart_container">
                         <div>
@@ -39,23 +41,46 @@ const Header = (props) => {
 
     }
 
+    const Profile = () => {
+        if(authUser.username){
+            return(
+                <a className="profile_container" href="/">
+                    <li to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></li>
+                    <div className="profile_title">Hello,</div>
+                    <div className="profile_subtitle">{authUser.username}</div>
+                </a>
+            )
+        }
+        else{
+            return(
+                <a className="profile_container" href="/login">
+                    <li to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></li>
+                    <div className="profile_title">Hello,</div>
+                    <div className="profile_subtitle">Guest</div>
+                </a>
+            )
+        }
+    }
+
     return(
 
-        <header className="header">
+        <header className="header_container">
 
             <Link to='/' className="title">Fortnite Cosmetics</Link>
 
             <nav>
                 <ul>
                     <Link to='/products'>Products</Link>
-                    <li>About</li>
+
+                    < Profile />
+
                     <Link to='/cart' className="cart">
                         <div style={{position: 'relative'}} onMouseOver={e => showMiniCart(e)} onMouseLeave={e => removeMiniCart(e)}>
                                 <div className="mini_cart">
                                     {miniCart()}
                                 </div>
                             <img className="cart_icon" src="./svg/cart.svg" alt="cart"></img>
-                            <div className="qty_icon">{props.cart.length}</div>
+                            <div className="qty_icon">{cart.length}</div>
                         </div>
                     </Link>
                     

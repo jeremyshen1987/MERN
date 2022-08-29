@@ -8,6 +8,53 @@ export const Register = () => {
     const [hasRegistered, setHasRegistered] = useState(false)
     const [error, setError] = useState('')
 
+
+
+
+    async function register(e){
+
+        e.preventDefault()
+        console.log(e.target.parentElement.username)
+
+        const pw = e.target.parentElement.password.value
+        const pw2 = e.target.parentElement.password2.value
+
+        if(pw !== pw2){
+            alert('Password mismatch')
+            return
+        }
+
+        const formElm = e.target.parentElement
+        const formData = {
+            username: formElm.username.value,
+            password: await bcrypt.hash(formElm.password.value, 10),
+            firstname: formElm.firstname.value,
+            lastname: formElm.lastname.value,
+            email: formElm.email.value,
+        }
+        
+        const formPOST = await fetch('http://localhost:5000/register', {
+
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+
+        const response = await formPOST.json()
+        if(response.error){
+
+            const errorKey = Object.keys(response.error.keyValue)[0]
+            
+            setError(errorKey)
+            return
+        }
+
+        setHasRegistered(true)
+        
+    }
+
     const RegForm = () => {
 
         return(
@@ -58,53 +105,6 @@ export const Register = () => {
             </div>
 
         )
-    }
-
-
-    async function register(e){
-
-        e.preventDefault()
-        console.log(e.target.parentElement.username)
-
-        const pw = e.target.parentElement.password.value
-        const pw2 = e.target.parentElement.password2.value
-
-        
-
-        if(pw !== pw2){
-            alert('Password mismatch')
-            return
-        }
-
-        const formElm = e.target.parentElement
-        const formData = {
-            username: formElm.username.value,
-            password: await bcrypt.hash(formElm.password.value, 10),
-            firstname: formElm.firstname.value,
-            lastname: formElm.lastname.value,
-            email: formElm.email.value,
-        }
-        
-        const formPOST = await fetch('http://localhost:5000/register', {
-
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-
-        const response = await formPOST.json()
-        if(response.error){
-
-            const errorKey = Object.keys(response.error.keyValue)[0]
-            
-            setError(errorKey)
-            return
-        }
-
-        setHasRegistered(true)
-        
     }
 
     return(

@@ -6,12 +6,12 @@
     overflow: visible;
 
 }
-header.header, ul {
+header.header_container, ul {
     display: flex;
     list-style-type: none;
 }
 
-header.header {
+header.header_container {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -19,17 +19,21 @@ header.header {
     color: white;
 }
 .title {
-    flex-grow: 1;
-    font-size: 3.5rem;
+    /* flex-grow: 1; */
+    font-size: 2.5rem;
     color: white;
     line-height: 104px;
     text-decoration: none;
 }
 
+nav {
+    margin-left: auto;
+}
+
 ul {
-    margin: 0 30px;
+    margin: 0 30px auto;
     font-size: 2.5rem;
-    gap: 80px;
+    gap: 20px;
 }
 
 ul > * {
@@ -115,4 +119,40 @@ img.cart_icon {
 
 .minicart_item_title {
     font-size: 1.5rem;
+}
+
+/* PROFILE */
+
+a.profile_container {
+    height: 100px;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    place-items: center;
+}
+
+li.profile_pic {
+    grid-row: 1/-1;
+    margin-right: 10px;
+}
+
+div.profile_title, div.profile_subtitle {
+    line-height: 20px;
+    font-size: 1.2rem;
+    justify-self: start;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 5px;
+}
+
+div.profile_title {
+    color: lightgrey;
+    align-self: end;
+}
+div.profile_subtitle {
+    color: #fff;
+    text-overflow: ellipsis;
+    align-self: start;
 }

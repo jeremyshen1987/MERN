@@ -1,10 +1,21 @@
 :root {
     --forestGreen: #1f7057;
+    box-sizing: border-box;
+    --white: #fff;
+    --brightRed: #D61C4E;
+    --midBlue: #1890ff;
+    --mdnBlue: #8cb4ff;
+    overflow: visible;
 }
+
+
 
 body {
     box-sizing: border-box;
 }
+
+/* Register Login */
+
 .register_container {
     width: 50%;
     min-height: 500px;
@@ -16,27 +27,28 @@ body {
     place-items: center;
 }
 
-h1.registration {
+h1.registration, h1.login_banner {
     margin: 30px auto;
     text-align: center;
 }
 
-.register_container > * {
+.register_container, .login_container > * {
     font-size: 1.2rem;
     font-weight: 900;
     padding: 15px;
 }
 
-div.registration, input.registration {
+div.registration, input.registration, input.login, button#login {
     width: 100%;
+    padding: 15px;
 }
 
-input.registration {
+input.registration, input.login {
     min-height: 30px;
     margin-top: 10px;
 }
 
-button#signup {
+button#signup, button#login {
     grid-column: 1 / -1;
     background-color: var(--forestGreen);
     color: white;
@@ -44,5 +56,26 @@ button#signup {
     margin: 8px 0;
     border-radius: 5px;
     cursor: pointer;
-    
+}   
+
+form.login_container {
+    width: 35%;
+    min-height: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    border: #666666 2px solid;
 }
+
+/* Register Login End  */
+
+
+
+/* Cart */
+
+button:disabled {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+/* Cart End */

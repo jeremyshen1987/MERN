@@ -1,20 +1,21 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import App from "./App";
 import Header from "./Header";
 import Products from "./Products";
 import Cart from "./Cart";
+import "./MainCSS.css"
 import { Auth } from "./Login";
+import { Register } from "./Register";
 import { useState, createContext } from "react";
 
 
-export const cityContext = createContext()
+export const mainContext = createContext()
 
 const RouteSwitch = () => {
 
+  const [authUser, setAuthUser] = useState({})
   const [cart, setCart] = useState([])
   const [inventoryCopy, setInventoryCopy] = useState([])
-
-  const [test1, test2, test3] = ['001', '007', '009']
 
 
   return (
@@ -22,18 +23,19 @@ const RouteSwitch = () => {
     
     <BrowserRouter>
 
-      <cityContext.Provider value={{test1, test2}}>
+      <mainContext.Provider value={{cart, setCart, authUser, setAuthUser, inventoryCopy, setInventoryCopy}}>
 
         <Header cart={cart}/>
 
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="/products" element={<Products cart={cart} setCart={setCart} inventoryCopy={inventoryCopy} setInventoryCopy={setInventoryCopy}/>} />
-          <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Auth />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
 
-      </cityContext.Provider>
+      </mainContext.Provider>
 
     </BrowserRouter>
     

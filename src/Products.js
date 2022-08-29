@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import './Products.css'
+import { mainContext } from "./RouteSwitch";
 
 
-const Products = (props) => {
+const Products = () => {
 
+  const {inventoryCopy, setInventoryCopy, cart, setCart} = useContext(mainContext)
   const [filteredInventory, setFilteredInventory] = useState([])
   const [raritySelector, setRaritySelector] = useState('all')
 
@@ -20,10 +22,10 @@ const Products = (props) => {
 
     console.log('change rarity')
     if(raritySelector === 'all'){
-      setFilteredInventory(props.inventoryCopy.filter(item => item.rarity.value !== null))
+      setFilteredInventory(inventoryCopy.filter(item => item.rarity.value !== null))
       return
     }
-    setFilteredInventory(() => props.inventoryCopy.filter(item => item.rarity.value === raritySelector))
+    setFilteredInventory(() => inventoryCopy.filter(item => item.rarity.value === raritySelector))
     return(
       console.log('clean up event')
     )
@@ -32,7 +34,7 @@ const Products = (props) => {
 
   async function getItems(){
 
-    if(props.inventoryCopy.length !== 0){
+    if(inventoryCopy.length !== 0){
       return
     }
 
@@ -49,7 +51,7 @@ const Products = (props) => {
     itemsArr.map(item => item.price = setPrice(item))
 
     setFilteredInventory([...itemsArr])
-    props.setInventoryCopy([...itemsArr])    
+    setInventoryCopy([...itemsArr])    
   }
 
   function setPrice(item){
@@ -72,14 +74,14 @@ const Products = (props) => {
 
   function addItemToCart(item){
     console.log(item)
-    // console.log(props.setCart)
-    const itemInCart = props.cart.filter(el => el.id === item.id)
+    // console.log(setCart)
+    const itemInCart = cart.filter(el => el.id === item.id)
 
     if(itemInCart.length === 0){
       item.qty = 1
     
-      props.setCart([...props.cart, item])
-      console.log(props.cart)
+      setCart([...cart, item])
+      console.log(cart)
     }
     else{
       return
@@ -87,26 +89,113 @@ const Products = (props) => {
 
   }
 
-
-
   function capitalize(word){
     return word[0].toUpperCase() + word.slice(1)
+  }
+
+  const FilterRarity = () => {
+    return(
+
+      <div className="rarity_fiter">
+
+        <div className="filter_title">
+          Rarity
+        </div>
+
+        <button className="filter_selector" onClick={() => setRaritySelector('all')}>All</button>
+        <button className="filter_selector" onClick={() => setRaritySelector('epic')}>Epic</button>
+        <button className="filter_selector" onClick={() => setRaritySelector('rare')}>Rare</button>
+        <button className="filter_selector" onClick={() => setRaritySelector('uncommon')}>Uncommon</button>
+      </div>
+    )
+  }
+
+  const FilterPrice = () => {
+
+    const filter_price = (e) => {
+      e.preventDefault()
+
+      const priceRanges = document.querySelectorAll('#price_filter')
+
+      let selectedRange = []
+
+      priceRanges.forEach(item =>{
+
+        if(item.checked){
+          let min = parseInt(item.value.split('-')[0]) 
+          let max = parseInt(item.value.split('-')[1])
+          selectedRange.push([min, max])
+        }
+      })
+      // SAMPLE selectedRange: [[0, 10], [25, 35]]
+
+
+      let inRangeInventory = []
+
+      selectedRange.forEach(item =>{
+
+        const inRangeItems = filteredInventory === [] ? 
+
+          inventoryCopy.filter(x => x.price > item[0] && x.price <= item[1]) :
+          filteredInventory.filter(x => x.price > item[0] && x.price <= item[1])
+
+
+        inRangeInventory.push(inRangeItems)
+      })
+
+      // SAMPLE inRangeInventory: Array(14) => 0:(14), [[Prototype]]: Array(0)
+      setFilteredInventory(inRangeInventory[0])
+      
+      console.log(inRangeInventory)
+    }
+
+    return(
+      <div className="filter_price">
+
+        <div className="filter_title">
+          Price
+        </div>
+
+        <form className="filter_price_container">
+
+          <div className="filter_price_item">
+            <input name="less5" id="price_filter" type="checkbox" value="0-4.99" />
+            <label htmlFor="less5">Less than 5</label>
+          </div>
+
+          <div className="filter_price_item">
+            <input name="less15" id="price_filter" type="checkbox" value="5-14.99" />
+            <label htmlFor="less15">5 to 14.99</label>
+          </div>
+
+          <div className="filter_price_item">
+            <input name="less35" id="price_filter" type="checkbox" value="15-34.99" />
+            <label htmlFor="less35">15 to 34.99</label>
+          </div>
+
+          <div className="filter_price_item">
+            <input name="more35" id="price_filter" type="checkbox" value="35-999" />
+            <label htmlFor="more35">More than 35</label>
+          </div>
+          
+          <div className="price_filter_btn_container">
+            <button className="reset_all_filter" onClick={() => setRaritySelector('all')}>Reset</button>
+            <button className="apply_filter" onClick={e => filter_price(e)}>Apply</button>
+          </div>
+          
+        </form>
+        
+      </div>
+    )
   }
 
   return (
     
     <main className="products_container">
-
       <aside className="sidebar">
-        <div className="rarity_fiter">
-          <div className="filter_title">Rarity</div>
-          <button className="filter_selector" onClick={() => setRaritySelector('all')}>All</button>
-          <button className="filter_selector" onClick={() => setRaritySelector('epic')}>Epic</button>
-          <button className="filter_selector" onClick={() => setRaritySelector('rare')}>Rare</button>
-          <button className="filter_selector" onClick={() => setRaritySelector('uncommon')}>Uncommon</button>
-        </div>
+        <FilterRarity />
+        <FilterPrice />
       </aside>
-
 
       <div className="items_container">
       {filteredInventory.map((item) => {

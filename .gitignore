@@ -2,6 +2,7 @@
 
 # ignore :
 
+lib/*
 node_modules/
 
 
