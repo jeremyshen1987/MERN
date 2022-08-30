@@ -66,6 +66,9 @@ form.login_container {
     border: #666666 2px solid;
 }
 
+h3.login_link, register_link {
+    text-align: center;
+}
 /* Register Login End  */
 
 

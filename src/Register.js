@@ -101,6 +101,7 @@ export const Register = () => {
                     
                     <button id="signup" onClick={(e) => register(e)}>Sign Up</button>
                 </form>
+                <h3 className='login_link'>Already have an account? &nbsp; &nbsp;<Link to={'/login'}>Login</Link></h3>
 
             </div>
 

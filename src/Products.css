@@ -34,6 +34,15 @@ div.filter_price_item {
     margin: 0 25%;
 }
 
+div.filter_price_custom {
+    display: flex;
+    justify-content: center;
+}
+
+input#price_picker_low, input#price_picker_high {
+    max-width: 75px;
+}
+
 input#price_filter {
     margin-right: 15px;
 }

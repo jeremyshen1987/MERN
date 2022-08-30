@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react'
+import { Link } from 'react-router-dom'
 import { mainContext } from './RouteSwitch'
 
 export const Auth = () => {
@@ -61,7 +62,7 @@ export const Auth = () => {
                 </div>
                 
             </form>
-            
+            <h3 className='register_link'>Don't have an account? &nbsp; &nbsp;<Link to={'/register'}>Register</Link></h3>
 
         </div>
         )

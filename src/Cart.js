@@ -4,7 +4,7 @@ import './Cart.css'
 
 const Cart = () => {
 
-    const {cart, setCart, authUser} = useContext(mainContext)
+    const {cart, setCart, authUser, setAuthUser} = useContext(mainContext)
 
     const cartQty = cart.length
     const [priceTotal, setPriceTotal] = useState(0)
@@ -71,7 +71,7 @@ const Cart = () => {
 
         if(authUser.username) {
             return(
-                <button className="checkout_btn" onClick={() => pay()}>PAY</button>
+                <button className="checkout_btn" onClick={() => pay(cart)}>PAY</button>
             )
         }
         else{
@@ -82,9 +82,23 @@ const Cart = () => {
 
     }
 
-    async function pay(data){
+    async function pay(cart){
+
+        console.log('cart:', cart)
+        if(authUser.credits < priceTotal){
+            alert('insufficient funds')
+            return
+        }
+
+        const data = {
+            
+            cart: cart,
+            uid: authUser.uid,
+            orderNum: (authUser.orders.length + 1),
+            priceTotal: priceTotal
+        }
         
-        const res_POST = await fetch('http://localhost:5000/test', {
+        const cart_POST = await fetch('http://localhost:5000/checkout', {
 
             method: 'POST',
             headers: {
@@ -93,7 +107,13 @@ const Cart = () => {
             body: JSON.stringify(data)
         })
 
-        const response = await res_POST.json()
+        const response = await cart_POST.json()
+
+
+        // setAuthUser(preVal =>({
+        //     ...preVal,
+        //     credits: (preVal.credits - priceTotal)
+        // }))
 
         console.log(response)
         console.log('cart items sent')
