@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { Link} from "react-router-dom";
-import './Header.css'
+import './Header.css';
 import { mainContext } from "./RouteSwitch";
 
 const Header = () => {
@@ -45,16 +45,17 @@ const Header = () => {
         if(authUser.username){
             return(
                 <a className="profile_container" href="/">
-                    <li to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></li>
+                    <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
                     <div className="profile_title">Hello,</div>
                     <div className="profile_subtitle">{authUser.username}</div>
+                    <div className="credits_banner">$:{authUser.credits}</div>
                 </a>
             )
         }
         else{
             return(
                 <a className="profile_container" href="/login">
-                    <li to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></li>
+                    <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
                     <div className="profile_title">Hello,</div>
                     <div className="profile_subtitle">Guest</div>
                 </a>

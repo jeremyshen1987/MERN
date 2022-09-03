@@ -124,6 +124,7 @@ img.cart_icon {
 /* PROFILE */
 
 a.profile_container {
+    position: relative;
     height: 100px;
     cursor: pointer;
     display: grid;
@@ -132,7 +133,7 @@ a.profile_container {
     place-items: center;
 }
 
-li.profile_pic {
+.profile_pic {
     grid-row: 1/-1;
     margin-right: 10px;
 }
@@ -155,4 +156,18 @@ div.profile_subtitle {
     color: #fff;
     text-overflow: ellipsis;
     align-self: start;
+}
+
+div.credits_banner {
+    position: absolute;
+    top: 5px;
+    left: 100px;
+    color: black;
+    background-color: gold;
+    border: white 2px solid;
+    border-radius: 10px;
+    font-size: 1rem;
+    padding: 10px;
+    max-height: 50px;
+    line-height: 0;
 }

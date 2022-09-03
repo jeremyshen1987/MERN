@@ -78,6 +78,17 @@ img.change_qty{
     margin: 50px 80px;
 }
 
+div.checkout_btn_and_msg {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+p.warning {
+    margin: 20px 0;
+    color: red;
+}
+
 button.checkout_btn {
     cursor: pointer;
     font-size: 2.5rem;
@@ -85,3 +96,4 @@ button.checkout_btn {
     border: #1f7057 2px solid;
     color: #1f7057;
 }
+

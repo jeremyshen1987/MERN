@@ -76,7 +76,11 @@ const Cart = () => {
         }
         else{
             return(
-                <button disabled className="checkout_btn" onClick={() => pay()}>PAY</button>
+                <div className="checkout_btn_and_msg">
+                    <p className="warning">Only auth user can make a purchase. Please <a href="/login">Sign In</a></p>
+                    <button disabled className="checkout_btn" onClick={() => pay()}>PAY</button>
+                </div>
+      
             )
         }
 

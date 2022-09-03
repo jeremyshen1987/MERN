@@ -3,9 +3,10 @@ import App from "./App";
 import Header from "./Header";
 import Products from "./Products";
 import Cart from "./Cart";
-import "./MainCSS.css"
-import { Auth } from "./Login";
-import { Register } from "./Register";
+import Auth from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
+import "./MainCSS.css";
 import { useState, createContext } from "react";
 
 
@@ -33,6 +34,7 @@ const RouteSwitch = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Auth />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
 
       </mainContext.Provider>

@@ -73,18 +73,13 @@ const Products = () => {
   }
 
   function addItemToCart(item){
-    console.log(item)
-    // console.log(setCart)
+    
     const itemInCart = cart.filter(el => el.id === item.id)
 
     if(itemInCart.length === 0){
+
       item.qty = 1
-    
       setCart([...cart, item])
-      console.log(cart)
-    }
-    else{
-      return
     }
 
   }
@@ -92,6 +87,10 @@ const Products = () => {
   function capitalize(word){
     return word[0].toUpperCase() + word.slice(1)
   }
+
+  // const sortPrice(){
+    
+  // }
 
   const FilterRarity = () => {
     return(
@@ -138,8 +137,6 @@ const Products = () => {
 
       }
 
-
-
     
       const priceRanges = document.querySelectorAll('#price_filter')
 
@@ -151,7 +148,7 @@ const Products = () => {
 
       //check if at least one checkbox is checked. if none is checked, use result_checkboxes instead
       if(!nonChecked){
-        
+
         // if more than one boxes are checked, items meet critieria will become inRangeItems(array), then pushed to result array, which lead to nested array
         let result_checkbox_nested = []
         let selectedRange = []
@@ -204,23 +201,6 @@ const Products = () => {
 
     }
 
-    const validat_price_range = (min, max) => {
-      if( isNaN(min) || isNaN(min) ){
-        alert('please enter a number!')
-        return false
-      }
-
-      if(min < 0){
-        alert('no one sell for a loss!')
-        return false
-      }
-      if(min > max){
-        alert('max must be greater than min!')
-        return false
-      }
-      return true
-    }
-
     return(
       <div className="filter_price">
 
@@ -267,6 +247,24 @@ const Products = () => {
     )
   }
 
+  const validat_price_range = (min, max) => {
+    if( isNaN(min) || isNaN(min) ){
+      alert('please enter a number!')
+      return false
+    }
+
+    if(min < 0){
+      alert('no one sell for a loss!')
+      return false
+    }
+    if(min > max){
+      alert('max must be greater than min!')
+      return false
+    }
+    return true
+  }
+
+  
   return (
     
     <main className="products_container">
@@ -275,21 +273,32 @@ const Products = () => {
         <FilterPrice />
       </aside>
 
-      <div className="items_container">
-      {filteredInventory.map((item) => {
-        return <div key={item.id} className='item_box'>
-                <h2>{item.name}</h2>
-                <div className="item_description">{capitalize(item.description)}</div>
+      <div className="main_container">
+        <div className="sort_container">
+          <span className="sort_title">Sort By:</span>
+          <button className="sort_price">Price</button>
+          <button className="alphabat">A-Z</button>
+        </div>
 
-                <div>Type: {capitalize(item.type.value)}</div>
-                <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
-                <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
-                <img src={item.images.icon} alt={item.name}></img>
-                <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
-               </div>
-      })}
+
+        <div className="items_container">
+          {filteredInventory.length === 0 
+          ? <h1>No items fits critieria</h1> 
+          : filteredInventory.map((item) => {
+              return <div key={item.id} className='item_box'>
+                      <h2>{item.name}</h2>
+                      <div className="item_description">{capitalize(item.description)}</div>
+
+                      <div>Type: {capitalize(item.type.value)}</div>
+                      <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
+                      <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
+                      <img src={item.images.icon} alt={item.name}></img>
+                      <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
+                    </div>
+          })}
+        </div>
+        
       </div>
-
 
     </main>
   );

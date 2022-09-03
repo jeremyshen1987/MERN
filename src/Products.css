@@ -47,6 +47,16 @@ input#price_filter {
     margin-right: 15px;
 }
 
+div.sort_container {
+    max-height: 50px;
+    display: flex;
+    gap: 35px;
+}
+
+span.sort_title {
+    font-size: 1.5rem;
+    padding: 10px;
+}
 
 .items_container {
     width: 75vw;
@@ -111,7 +121,7 @@ div.price_filter_btn_container {
     gap: 15px;
 }
 
-button.reset_all_filter, .apply_filter {
+button.reset_all_filter, .apply_filter, .sort_price, .alphabat {
     font-size: 1rem;
     color: white;
     background-color: var(--brightRed);

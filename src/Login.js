@@ -2,7 +2,7 @@ import React, {useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { mainContext } from './RouteSwitch'
 
-export const Auth = () => {
+const Auth = () => {
     const {authUser, setAuthUser} = useContext(mainContext)
     const [error, setError] = useState('')
 
@@ -73,7 +73,7 @@ export const Auth = () => {
 
         <div>
             {authUser.username ? '' : <LoginForm />}
-            {authUser.username && <h1>Welcome Back, {authUser.username}</h1>}
+            {authUser.username && <h1>Welcome Back, {authUser.username}. <Link to={'/dashboard'}>Dashboard</Link></h1>}
             <h1 style={{color: "red", textAlign: 'center'}}>{error}</h1>
             
         </div>
@@ -82,3 +82,5 @@ export const Auth = () => {
     )
 
 }
+
+export default Auth

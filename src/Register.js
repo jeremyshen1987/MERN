@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Link, Route } from "react-router-dom";
 const bcrypt = require('bcryptjs')
 
-export const Register = () => {
+const Register = () => {
 
 
     const [hasRegistered, setHasRegistered] = useState(false)
@@ -118,3 +118,5 @@ export const Register = () => {
         </div>
     )
 }
+
+export default Register
