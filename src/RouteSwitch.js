@@ -17,6 +17,8 @@ const RouteSwitch = () => {
   const [authUser, setAuthUser] = useState({})
   const [cart, setCart] = useState([])
   const [inventoryCopy, setInventoryCopy] = useState([])
+  const [filteredInventory, setFilteredInventory] = useState([])
+  const [searchResult, setSearchResult] = useState([])
 
 
   return (
@@ -24,7 +26,18 @@ const RouteSwitch = () => {
     
     <BrowserRouter>
 
-      <mainContext.Provider value={{cart, setCart, authUser, setAuthUser, inventoryCopy, setInventoryCopy}}>
+      <mainContext.Provider value={{
+        cart, 
+        setCart, 
+        authUser, 
+        setAuthUser, 
+        inventoryCopy, 
+        setInventoryCopy, 
+        filteredInventory, 
+        setFilteredInventory, 
+        searchResult, 
+        setSearchResult
+        }}>
 
         <Header cart={cart}/>
 

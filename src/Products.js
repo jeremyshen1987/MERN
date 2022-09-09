@@ -6,8 +6,7 @@ import { mainContext } from "./RouteSwitch";
 
 const Products = () => {
 
-  const {inventoryCopy, setInventoryCopy, cart, setCart} = useContext(mainContext)
-  const [filteredInventory, setFilteredInventory] = useState([])
+  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult} = useContext(mainContext)
   const [raritySelector, setRaritySelector] = useState('all')
 
   useEffect(() => {
@@ -86,11 +85,37 @@ const Products = () => {
 
   function capitalize(word){
     return word[0].toUpperCase() + word.slice(1)
+  } 
+
+  //sort by price and alphabatic order
+
+  const toBeSorted = filteredInventory || inventoryCopy
+
+  const sortPriceAscend = () => {
+
+    const sorted =  [...toBeSorted].sort((a, b) => a.price - b.price)
+    setFilteredInventory(sorted)
   }
 
-  // const sortPrice(){
-    
-  // }
+  const sortPriceDescend = () => {
+
+    const sorted = [...toBeSorted].sort((a, b) => b.price - a.price)
+    setFilteredInventory(sorted)
+  }
+
+  const sortAZ = () => {
+
+    const sorted = [...toBeSorted].sort((a, b) => a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1)
+    setFilteredInventory(sorted)
+  }
+
+  const sortZA = () => {
+
+    const sorted = [...toBeSorted].sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? 1 : -1)
+    setFilteredInventory(sorted)
+  }
+
+
 
   const FilterRarity = () => {
     return(
@@ -254,7 +279,7 @@ const Products = () => {
     }
 
     if(min < 0){
-      alert('no one sell for a loss!')
+      alert('we do not sell for a loss!')
       return false
     }
     if(min > max){
@@ -276,15 +301,17 @@ const Products = () => {
       <div className="main_container">
         <div className="sort_container">
           <span className="sort_title">Sort By:</span>
-          <button className="sort_price">Price</button>
-          <button className="alphabat">A-Z</button>
+          <button className="sort_price_ascend" onClick={sortPriceAscend}>Price: Lowest First</button>
+          <button className="sort_price_descend" onClick={sortPriceDescend}>Price: Highest First</button>
+          <button className="alphabat_ascend" onClick={sortAZ}>A-Z</button>
+          <button className="alphabat_descend" onClick={sortZA}>A-Z</button>
         </div>
 
 
         <div className="items_container">
           {filteredInventory.length === 0 
           ? <h1>No items fits critieria</h1> 
-          : filteredInventory.map((item) => {
+          : (searchResult.length === 0 ?  filteredInventory : searchResult).map((item) => {
               return <div key={item.id} className='item_box'>
                       <h2>{item.name}</h2>
                       <div className="item_description">{capitalize(item.description)}</div>

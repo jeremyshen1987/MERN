@@ -5,7 +5,23 @@ import { mainContext } from "./RouteSwitch";
 
 const Header = () => {
 
-    const {authUser, setAuthUser, cart, setCart}  = useContext(mainContext)
+    const {authUser, setAuthUser, cart, setCart, inventoryCopy, filteredInventory, setFilteredInventory, searchResult, setSearchResult}  = useContext(mainContext)
+
+
+    const search = (e) => {
+
+        const currentVal = e.target.value
+
+        if(currentVal === ''){
+            setSearchResult([])
+            return
+        }
+
+        const arr = filteredInventory || inventoryCopy
+        const match = arr.filter(item => item.name.toUpperCase().slice(0, currentVal.length) === currentVal.toUpperCase())
+        setSearchResult(match)
+    }
+
 
     const miniCartElement = document.querySelector('.mini_cart')
     function showMiniCart(e){
@@ -37,8 +53,6 @@ const Header = () => {
                 )
             })
         )
-
-
     }
 
     const Profile = () => {
@@ -71,6 +85,10 @@ const Header = () => {
 
             <nav>
                 <ul>
+                    <label htmlFor="search">
+                        <input  onChange={e => search(e)} type='text' name="search" />
+                    </label>
+
                     <Link to='/products'>Products</Link>
 
                     < Profile />
