@@ -6,7 +6,7 @@ import { mainContext } from "./RouteSwitch";
 
 const Products = () => {
 
-  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult} = useContext(mainContext)
+  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult, authUser} = useContext(mainContext)
   const [raritySelector, setRaritySelector] = useState('all')
 
   useEffect(() => {
@@ -74,6 +74,8 @@ const Products = () => {
   function addItemToCart(item){
     
     const itemInCart = cart.filter(el => el.id === item.id)
+
+    item.inCart = true
 
     if(itemInCart.length === 0){
 
@@ -309,7 +311,7 @@ const Products = () => {
 
 
         <div className="items_container">
-          {filteredInventory.length === 0 
+          {filteredInventory.length === 0 || authUser.noResult === true
           ? <h1>No items fits critieria</h1> 
           : (searchResult.length === 0 ?  filteredInventory : searchResult).map((item) => {
               return <div key={item.id} className='item_box'>
@@ -320,7 +322,13 @@ const Products = () => {
                       <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
                       <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
                       <img src={item.images.icon} alt={item.name}></img>
-                      <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
+                      {item.inCart === true ? 
+
+                        <Link className="inCart" to='/cart'>View Cart</Link>
+                        :
+                        <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
+                      }
+                      
                     </div>
           })}
         </div>

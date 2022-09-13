@@ -51,6 +51,8 @@ const Cart = () => {
                 return newArr
             })
 
+            item.inCart = false
+
             return
         }
 

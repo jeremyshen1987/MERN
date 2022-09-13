@@ -19,6 +19,13 @@ const Header = () => {
 
         const arr = filteredInventory || inventoryCopy
         const match = arr.filter(item => item.name.toUpperCase().slice(0, currentVal.length) === currentVal.toUpperCase())
+
+        setAuthUser({...authUser, noResult:false})
+        if(match.length === 0 && currentVal.length !== 0){
+            setAuthUser({...authUser, noResult:true})
+            return
+        }
+
         setSearchResult(match)
     }
 

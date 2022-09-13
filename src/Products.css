@@ -92,7 +92,7 @@ img {
     aspect-ratio: 1;
 }
 
-.btn_addItem {
+.btn_addItem, .inCart {
     cursor: pointer;
     margin-top: auto;
     width: 200px;
@@ -101,9 +101,15 @@ img {
     border-radius: 10px;
 }
 
-.btn_addItem:hover {
+.btn_addItem:hover, .inCart {
     color: white;
     background-color: var(--forestGreen);
+}
+
+.inCart {
+    font-size: 1.5rem;
+    text-decoration: none;
+    padding: 10px;
 }
 
 button.filter_selector, .reset_all_filter, .apply_filter {
