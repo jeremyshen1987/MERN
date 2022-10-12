@@ -6,8 +6,13 @@ import { mainContext } from "./RouteSwitch";
 
 const Products = () => {
 
-  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult, authUser} = useContext(mainContext)
+  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult, authUser, util, setUtil} = useContext(mainContext)
   const [raritySelector, setRaritySelector] = useState('all')
+
+  useEffect(() => {
+    
+    document.title = 'Products'
+  }, [])
 
   useEffect(() => {
     
@@ -33,9 +38,10 @@ const Products = () => {
 
   async function getItems(){
 
-    if(inventoryCopy.length !== 0){
-      return
-    }
+    // if(inventoryCopy.length !== 0){
+    //   return
+    // }
+    console.log('fetch prod')
 
     const response = await fetch('https://fortnite-api.com/v2/cosmetics/br/new')
 
@@ -51,6 +57,8 @@ const Products = () => {
 
     setFilteredInventory([...itemsArr])
     setInventoryCopy([...itemsArr])    
+
+    console.log('fetch prod complete')
   }
 
   function setPrice(item){
@@ -74,8 +82,6 @@ const Products = () => {
   function addItemToCart(item){
     
     const itemInCart = cart.filter(el => el.id === item.id)
-
-    item.inCart = true
 
     if(itemInCart.length === 0){
 
@@ -306,7 +312,7 @@ const Products = () => {
           <button className="sort_price_ascend" onClick={sortPriceAscend}>Price: Lowest First</button>
           <button className="sort_price_descend" onClick={sortPriceDescend}>Price: Highest First</button>
           <button className="alphabat_ascend" onClick={sortAZ}>A-Z</button>
-          <button className="alphabat_descend" onClick={sortZA}>A-Z</button>
+          <button className="alphabat_descend" onClick={sortZA}>Z-A</button>
         </div>
 
 
@@ -315,19 +321,19 @@ const Products = () => {
           ? <h1>No items fits critieria</h1> 
           : (searchResult.length === 0 ?  filteredInventory : searchResult).map((item) => {
               return <div key={item.id} className='item_box'>
-                      <h2>{item.name}</h2>
-                      <div className="item_description">{capitalize(item.description)}</div>
+                        <h2>{item.name}</h2>
+                        <div className="item_description">{capitalize(item.description)}</div>
 
-                      <div>Type: {capitalize(item.type.value)}</div>
-                      <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
-                      <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
-                      <img src={item.images.icon} alt={item.name}></img>
-                      {item.inCart === true ? 
+                        <div>Type: {capitalize(item.type.value)}</div>
+                        <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
+                        <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
+                        <img src={item.images.icon} alt={item.name}></img>
+                        {cart.map(elm => elm.id).includes(item.id) ? 
 
-                        <Link className="inCart" to='/cart'>View Cart</Link>
-                        :
-                        <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
-                      }
+                          <Link className="inCart" to='/cart'>View Cart</Link>
+                          :
+                          <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
+                        }
                       
                     </div>
           })}
