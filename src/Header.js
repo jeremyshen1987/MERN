@@ -65,12 +65,23 @@ const Header = () => {
     const Profile = () => {
         if(authUser.username){
             return(
-                <a className="profile_container" href="/">
-                    <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
-                    <div className="profile_title">Hello,</div>
-                    <div className="profile_subtitle">{authUser.username}</div>
-                    <div className="credits_banner">$:{authUser.credits}</div>
-                </a>
+
+                // <div className="profile_container">
+                //     <Link to='/dashboard' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
+                //     <div className="profile_title">Hello,</div>
+                //     <div className="profile_subtitle">{authUser.username}</div>
+                //     <div className="credits_banner">$:{authUser.credits}</div>
+                // </div>
+            
+                
+            
+            <Link to='/dashboard' className="profile_container">
+                <img className="profile_pic" src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img>
+                <div className="profile_title">Hello,</div>
+                <div className="profile_subtitle">{authUser.username}</div>
+                <div className="credits_banner">$:{authUser.credits}</div>
+            </Link>
+
             )
         }
         else{
