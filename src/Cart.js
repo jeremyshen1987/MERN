@@ -11,6 +11,11 @@ const Cart = () => {
 
     useEffect(() => {
     
+        document.title = 'Shopping Cart'
+    }, [])
+
+    useEffect(() => {
+    
         if(cartQty === 0){
             setPriceTotal(preVal => preVal = 0)
             return
@@ -24,6 +29,8 @@ const Cart = () => {
         setPriceTotal(total)
   
     }, [cart])
+
+    
 
 
     function addQty(item){
@@ -115,14 +122,23 @@ const Cart = () => {
 
         const response = await cart_POST.json()
 
+        if(response.statusCode === 200){
 
-        // setAuthUser(preVal =>({
-        //     ...preVal,
-        //     credits: (preVal.credits - priceTotal)
-        // }))
+            setAuthUser({
+                ...authUser, 
+                orders: response.orders,
+                credits: response.credits
+            })
+    
+            console.log(response)
+            console.log('cart items sent')
 
-        console.log(response)
-        console.log('cart items sent')
+            setCart([])
+            alert('Order placed!')
+            return
+        }
+
+        alert('Failed to process the order')
 
     }
 
