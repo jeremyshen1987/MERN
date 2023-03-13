@@ -17,6 +17,9 @@ const RouteSwitch = () => {
   const [cart, setCart] = useState([])
   const [inventoryCopy, setInventoryCopy] = useState([])
   const [filteredInventory, setFilteredInventory] = useState([])
+  const [searchResult, setSearchResult] = useState([])
+
+  const [util, setUtil] = useState({pending:false})
 
   return (
 
@@ -32,6 +35,10 @@ const RouteSwitch = () => {
         setInventoryCopy, 
         filteredInventory, 
         setFilteredInventory, 
+        searchResult, 
+        setSearchResult,
+        util, 
+        setUtil
         }}>
 
         <Header cart={cart}/>

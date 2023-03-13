@@ -111,7 +111,7 @@ const Cart = () => {
             priceTotal: priceTotal
         }
         
-        const cart_POST = await fetch('http://99.79.73.239:5000/checkout', {
+        const cart_POST = await fetch('http://localhost:5000/checkout', {
 
             method: 'POST',
             headers: {
@@ -135,7 +135,6 @@ const Cart = () => {
 
             setCart([])
             alert('Order placed!')
-            
             return
         }
 

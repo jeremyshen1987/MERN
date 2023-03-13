@@ -6,22 +6,25 @@ import { mainContext } from "./RouteSwitch";
 
 const Products = () => {
 
-  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory} = useContext(mainContext)
+  const {inventoryCopy, setInventoryCopy, cart, setCart, filteredInventory, setFilteredInventory, searchResult, authUser, util, setUtil} = useContext(mainContext)
   const [raritySelector, setRaritySelector] = useState('all')
-  const [input, setInput] = useState('')
 
   useEffect(() => {
     
     document.title = 'Products'
-
-    getItems()
-    
   }, [])
 
+  useEffect(() => {
+    
+    console.log('getItem effect run')
+    getItems()
+
+  }, [])
 
 
   useEffect(() => {
 
+    console.log('change rarity')
     if(raritySelector === 'all'){
       setFilteredInventory(inventoryCopy.filter(item => item.rarity.value !== null))
       return
@@ -35,6 +38,10 @@ const Products = () => {
 
   async function getItems(){
 
+    // if(inventoryCopy.length !== 0){
+    //   return
+    // }
+    console.log('fetch prod')
 
     const response = await fetch('https://fortnite-api.com/v2/cosmetics/br/new')
 
@@ -54,7 +61,6 @@ const Products = () => {
     console.log('fetch prod complete')
   }
 
-  //item object fetched from API doesn't contain pricing. Set a random price based on rarity
   function setPrice(item){
 
     switch (item.rarity.value){
@@ -291,28 +297,13 @@ const Products = () => {
     return true
   }
 
-  //Search bar
-
-  const search = (e) => {
-    setInput(e.target.value)
-  }
-  const search_arr = filteredInventory || inventoryCopy
-  const search_result = search_arr.filter(item => item.name.toUpperCase().includes( input.toUpperCase() ))
-
-
-
+  
   return (
     
     <main className="products_container">
       <aside className="sidebar">
         <FilterRarity />
         <FilterPrice />
-
-        <div className="search_bar">
-          <label>Search: </label>
-          <input onChange={search}></input>
-        </div>
-
       </aside>
 
       <div className="main_container">
@@ -326,16 +317,16 @@ const Products = () => {
 
 
         <div className="items_container">
-          {filteredInventory.length === 0 || search_result.length === 0
+          {filteredInventory.length === 0 || authUser.noResult === true
           ? <h1>No items fits critieria</h1> 
-          : (search_result.length === 0 ?  filteredInventory : search_result).map((item) => {
+          : (searchResult.length === 0 ?  filteredInventory : searchResult).map((item) => {
               return <div key={item.id} className='item_box'>
                         <h2>{item.name}</h2>
                         <div className="item_description">{capitalize(item.description)}</div>
 
                         <div>Type: {capitalize(item.type.value)}</div>
                         <div className={item.rarity.displayValue}>Rarity: {item.rarity.displayValue}</div>
-                        <div>Price: <span className="price">${item.price}</span> </div>
+                        <div>Price: <span style={{fontSize: "1.5rem", fontWeight: 700}}>${item.price}</span> </div>
                         <img src={item.images.icon} alt={item.name}></img>
                         {cart.map(elm => elm.id).includes(item.id) ? 
 
@@ -343,7 +334,8 @@ const Products = () => {
                           :
                           <button className="btn_addItem" onClick={() => addItemToCart(item)}>Add to Cart</button>
                         }
-                     </div>
+                      
+                    </div>
           })}
         </div>
         

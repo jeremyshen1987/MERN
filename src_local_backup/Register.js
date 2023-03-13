@@ -33,10 +33,7 @@ const Register = () => {
             email: formElm.email.value,
         }
         
-        ///url: 'http://99.79.73.239:5000/register' ///
-        ///url: 'http://localhost:5000/register' ///
-
-        const formPOST = await fetch('http://99.79.73.239:5000/register', {
+        const formPOST = await fetch('http://localhost:5000/register', {
 
             method: 'POST',
             headers: {
@@ -64,7 +61,7 @@ const Register = () => {
 
             <div >
                 <h1 className="registration">Registration</h1>
-                <form className="register_container" action="https://fortnite-cosmo.herokuapp.com/register" method="POST">
+                <form className="register_container" action="http://localhost:5000/test" method="POST">
                     
                     <div className="registration">
                         <label htmlFor="username">Username:

@@ -5,9 +5,31 @@ import { mainContext } from "./RouteSwitch";
 
 const Header = () => {
 
-    const {authUser, cart}  = useContext(mainContext)
+    const {authUser, setAuthUser, cart, setCart, inventoryCopy, filteredInventory, setFilteredInventory, searchResult, setSearchResult}  = useContext(mainContext)
 
-    //open mini cart on mouse hover
+
+    const search = (e) => {
+
+        const currentVal = e.target.value
+
+        if(currentVal === ''){
+            setSearchResult([])
+            return
+        }
+
+        const arr = filteredInventory || inventoryCopy
+        const match = arr.filter(item => item.name.toUpperCase().slice(0, currentVal.length) === currentVal.toUpperCase())
+
+        setAuthUser({...authUser, noResult:false})
+        if(match.length === 0 && currentVal.length !== 0){
+            setAuthUser({...authUser, noResult:true})
+            return
+        }
+
+        setSearchResult(match)
+    }
+
+
     const miniCartElement = document.querySelector('.mini_cart')
     function showMiniCart(e){
         
@@ -44,25 +66,33 @@ const Header = () => {
         if(authUser.username){
             return(
 
-                <Link to='/dashboard' className="profile_container">
-                    <img className="profile_pic" src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img>
-                    <div className="profile_title">Hello,</div>
-                    <div className="profile_subtitle">{authUser.username}</div>
-                    <div className="credits_banner">$:{authUser.credits}</div>
-                </Link>
+                // <div className="profile_container">
+                //     <Link to='/dashboard' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
+                //     <div className="profile_title">Hello,</div>
+                //     <div className="profile_subtitle">{authUser.username}</div>
+                //     <div className="credits_banner">$:{authUser.credits}</div>
+                // </div>
+            
+                
+            
+            <Link to='/dashboard' className="profile_container">
+                <img className="profile_pic" src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img>
+                <div className="profile_title">Hello,</div>
+                <div className="profile_subtitle">{authUser.username}</div>
+                <div className="credits_banner">$:{authUser.credits}</div>
+            </Link>
 
             )
         }
-        
-        return(
-                
-            <a className="profile_container" href="/login">
-                <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
-                <div className="profile_title">Hello,</div>
-                <div className="profile_subtitle">Guest</div>
-            </a>
-        )
-    
+        else{
+            return(
+                <a className="profile_container" href="/login">
+                    <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
+                    <div className="profile_title">Hello,</div>
+                    <div className="profile_subtitle">Guest</div>
+                </a>
+            )
+        }
     }
 
     return(
@@ -73,6 +103,9 @@ const Header = () => {
 
             <nav>
                 <ul>
+                    <label htmlFor="search">
+                        <input  onChange={e => search(e)} type='text' name="search" />
+                    </label>
 
                     <Link to='/products'>Products</Link>
 
