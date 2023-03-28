@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import { Link, Route } from "react-router-dom";
+import Helper from "./Helper";
 const bcrypt = require('bcryptjs')
 
 const Register = () => {
@@ -8,8 +9,7 @@ const Register = () => {
     const [hasRegistered, setHasRegistered] = useState(false)
     const [error, setError] = useState('')
 
-
-
+    const overlay = useRef()
 
     async function register(e){
 
@@ -24,6 +24,8 @@ const Register = () => {
             return
         }
 
+        toggle_overlay()
+
         const formElm = e.target.parentElement
         const formData = {
             username: formElm.username.value,
@@ -33,10 +35,8 @@ const Register = () => {
             email: formElm.email.value,
         }
         
-        ///url: 'http://99.79.73.239:5000/register' ///
-        ///url: 'http://localhost:5000/register' ///
 
-        const formPOST = await fetch('http://99.79.73.239:5000/register', {
+        const formPOST = await fetch('https://rich-rose-goose-cape.cyclic.app/register', {
 
             method: 'POST',
             headers: {
@@ -46,15 +46,19 @@ const Register = () => {
         })
 
         const response = await formPOST.json()
+
         if(response.error){
 
             const errorKey = Object.keys(response.error.keyValue)[0]
             
             setError(errorKey)
+            toggle_overlay()
             return
         }
 
+        setError('')
         setHasRegistered(true)
+        toggle_overlay()
         
     }
 
@@ -64,7 +68,7 @@ const Register = () => {
 
             <div >
                 <h1 className="registration">Registration</h1>
-                <form className="register_container" action="https://fortnite-cosmo.herokuapp.com/register" method="POST">
+                <form className="register_container" action="" method="POST">
                     
                     <div className="registration">
                         <label htmlFor="username">Username:
@@ -111,14 +115,28 @@ const Register = () => {
         )
     }
 
-    return(
-        <div>
+    function toggle_overlay(){
+        
+        console.log(overlay.current)
 
+        if(overlay.current.style.display == 'block'){
+            overlay.current.style.display = 'none'
+            return
+        }
+        overlay.current.style.display = 'block'
+
+    }
+
+    return(
+
+        <>
             {hasRegistered || <RegForm />}
             {error ? <h1 style={{color: "red", textAlign: 'center'}}>{error} already taken</h1> : ''}
             {hasRegistered && <h1>Registered! Please <Link to={'/login'}>Login</Link></h1>}
 
-        </div>
+            <Helper overlay_text = 'Waking up backend... please wait' ref={overlay}/>
+        </>
+
     )
 }
 

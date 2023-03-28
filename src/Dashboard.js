@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from "react";
 import { mainContext } from "./RouteSwitch";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import './Dashboard.css'
 
 
@@ -14,7 +14,7 @@ const Dashboard = () => {
     }, [])
 
     const Orders = () => {
-        
+
         return(
             authUser.orders.map(collection => {
                         
@@ -51,7 +51,7 @@ const Dashboard = () => {
             <div className="dashboard_container">
 
             {authUser.orders.length === 0 ? 
-            <h1>You have no past orders</h1> :
+            <h1>You have no past orders. Browse our <Link to='/products'>Products</Link></h1> :
             <>
             <button onClick={Logout} className='btn_logout'>Log out</button>
             <Orders />

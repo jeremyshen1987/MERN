@@ -111,7 +111,7 @@ const Cart = () => {
             priceTotal: priceTotal
         }
         
-        const cart_POST = await fetch('http://99.79.73.239:5000/checkout', {
+        const cart_POST = await fetch('https://rich-rose-goose-cape.cyclic.app/checkout', {
 
             method: 'POST',
             headers: {

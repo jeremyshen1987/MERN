@@ -58,6 +58,10 @@ button#signup, button#login {
     cursor: pointer;
 }   
 
+.login_container {
+    position: relative;
+}
+
 form.login_container {
     width: 35%;
     min-height: 300px;
@@ -69,6 +73,8 @@ form.login_container {
 .login_link, .register_link {
     text-align: center;
 }
+
+
 /* Register Login End  */
 
 

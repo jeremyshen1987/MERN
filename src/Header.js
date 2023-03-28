@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useRef} from "react";
 import { Link} from "react-router-dom";
 import './Header.css';
 import { mainContext } from "./RouteSwitch";
@@ -6,6 +6,8 @@ import { mainContext } from "./RouteSwitch";
 const Header = () => {
 
     const {authUser, cart}  = useContext(mainContext)
+
+    const overlay = useRef(null)
 
     //open mini cart on mouse hover
     const miniCartElement = document.querySelector('.mini_cart')
