@@ -129,12 +129,14 @@ const Register = () => {
 
     return(
 
-        <>
-            {hasRegistered || <RegForm />}
-            {error ? <h1 style={{color: "red", textAlign: 'center'}}>{error} already taken</h1> : ''}
-            {hasRegistered && <h1>Registered! Please <Link to={'/login'}>Login</Link></h1>}
+        <>  
+            <div className="registration_container">
+                {hasRegistered || <RegForm />}
+                {error ? <h1 style={{color: "red", textAlign: 'center'}}>{error} already taken</h1> : ''}
+                {hasRegistered && <h1>Registered! Please <Link to={'/login'}>Login</Link></h1>}
 
-            <Helper overlay_text = 'Waking up backend... please wait' ref={overlay}/>
+                <Helper overlay_text = 'Waking up backend... please wait' ref={overlay}/>
+            </div>
         </>
 
     )

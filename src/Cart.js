@@ -145,7 +145,7 @@ const Cart = () => {
 
     return(
 
-        <div>
+        <div className="cart_container">
             
             <div className="cart_title">Shopping Cart</div>
 

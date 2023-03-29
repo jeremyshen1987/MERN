@@ -46,9 +46,9 @@ const Dashboard = () => {
 
     return(
 
-        <div>
+        <div className="dashboard_container">
 
-            <div className="dashboard_container">
+            <div className="dashboard_sub_container">
 
             {authUser.orders.length === 0 ? 
             <h1>You have no past orders. Browse our <Link to='/products'>Products</Link></h1> :

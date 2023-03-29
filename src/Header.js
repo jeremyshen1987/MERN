@@ -74,6 +74,13 @@ const Header = () => {
             <Link to='/' className="title">Fortnite Cosmetics</Link>
 
             <nav>
+                
+                <a className="mobile_menu">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </a>
+
                 <ul>
 
                     <Link to='/products'>Products</Link>

@@ -12,6 +12,15 @@
 
 body {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    max-width: 2000px;
+}
+
+/* Sidebar and Main */
+
+main.products_container, .dashboard_container, .login_container, .registration_container, .cart_container {
+    padding-top: 120px;
 }
 
 /* Register Login */
