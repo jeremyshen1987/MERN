@@ -5,7 +5,7 @@ import Helper from './Helper'
 
 const Auth = () => {
 
-    const {authUser, setAuthUser} = useContext(mainContext)
+    const {authUser, setAuthUser, cart} = useContext(mainContext)
     const [error, setError] = useState('')
 
     const overlay = useRef()

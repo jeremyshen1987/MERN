@@ -58,11 +58,11 @@ const Header = () => {
         
         return(
                 
-            <a className="profile_container" href="/login">
-                <Link to='/' className="profile_pic"><img  src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img></Link>
+            <Link to='/login' className="profile_container" >
+                <img className="profile_pic" src='/svg/profile.svg' style={{width: '45px'}} alt="profile"></img>
                 <div className="profile_title">Hello,</div>
                 <div className="profile_subtitle">Guest</div>
-            </a>
+            </Link>
         )
     
     }

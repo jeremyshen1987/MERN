@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { mainContext } from "./RouteSwitch";
+import { Link } from 'react-router-dom'
 import './Cart.css'
 
 const Cart = () => {
@@ -86,7 +87,7 @@ const Cart = () => {
         else{
             return(
                 <div className="checkout_btn_and_msg">
-                    <p className="warning">Only auth user can make a purchase. Please <a href="/login">Sign In</a></p>
+                    <p className="warning">Only auth user can make a purchase. Please <Link to='/login'>Sign In</Link></p>
                     <button disabled className="checkout_btn" onClick={() => pay()}>PAY</button>
                 </div>
       

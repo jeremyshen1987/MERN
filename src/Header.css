@@ -84,7 +84,7 @@ img.cart_icon {
 .mini_cart {
     position: fixed;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-auto-rows: min-content;
     font-size: 1.2rem;
     color: black;
     opacity: 0;
@@ -92,19 +92,18 @@ img.cart_icon {
     padding: 30px;
     line-height: normal;
     z-index: 10;
-    top: 15%;
-    right: -20%;
+    top: 120px;
+    right: -600px;
     transition: transform .5s ease-in-out, opacity .5s ease;
-    transform: translate(40%, 0);
-    overflow: scroll;
+    width: 600px;
+    border: solid 2px gold;
 }
 
 .mini_cart.open {
     opacity: 1;
-    transform: translate(-60%, 0);
-    overflow-x: hidden;
+    transform: translateX(-600px);
     overflow-y: scroll;
-    height: 100%;
+    height: calc(100vh - 120px);
 }
 
 .mini_cart_container {
