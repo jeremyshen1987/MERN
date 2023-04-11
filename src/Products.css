@@ -14,10 +14,14 @@ aside.sidebar {
     grid-template-columns: 1fr 4fr;
 }
 
-div.rarity_fiter, form.filter_price_container {
+div.rarity_fiter, .filter_price_container {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.bg_skyblue{
+    background-color: skyblue;
 }
 
 div.rarity_fiter {
@@ -150,13 +154,13 @@ button.apply_filter {
 
 
 
-.epic {
+.epic, .bg_gold {
     background-color: gold;
 }
-.rare {
+.rare, .bg_purple {
     background-color: purple;
 }
-.uncommon {
+.uncommon, .bg_green {
     background-color: green;
 }
 .gaminglegends {

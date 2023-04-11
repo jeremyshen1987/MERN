@@ -1,8 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import './Products.css'
 import { mainContext } from "./RouteSwitch";
-
 
 
 function Products(){
@@ -20,12 +19,12 @@ function Products(){
 
   const {cart, setCart, filteredInventory, setFilteredInventory} = useContext(mainContext)
   const [selectFilter, setSelectFilter] = useState(noFilter)
-
+  const price_min = useRef(null)
+  const price_max = useRef(null)
 
   useEffect(() => {
     
     document.title = 'Products'
-
     getItems()
     
   }, [])
@@ -42,9 +41,7 @@ function Products(){
     const responseJSON = await response.json()
     const itemsArr = responseJSON.data.items
 
-
     itemsArr.map(item => item.price = setPrice(item))
-
     setFilteredInventory([...itemsArr])
   }
 
@@ -83,22 +80,20 @@ function Products(){
     return word[0].toUpperCase() + word.slice(1)
   } 
 
-  // const validat_price_range = (min, max) => {
-  //   if( isNaN(min) || isNaN(min) ){
-  //     alert('please enter a number!')
-  //     return false
-  //   }
+  function validat_price_range (min, max){
 
-  //   if(min < 0){
-  //     alert('we do not sell for a loss!')
-  //     return false
-  //   }
-  //   if(min > max){
-  //     alert('max must be greater than min!')
-  //     return false
-  //   }
-  //   return true
-  // }
+    if(min > max){
+      alert('max must be greater than min!')
+      ///return every products
+      return [0,999]
+    }
+
+    if(isNaN(min) || isNaN(max) ){
+      return[isNaN(min)? 0 : min, isNaN(max)? 999 : max]
+    }
+
+    return [min, max]
+  }
 
   //Search bar
 
@@ -109,50 +104,61 @@ function Products(){
     })
   }
 
-  function filterPrice(min, max, arr){
-    return arr.filter(item => item.price >= min && item.price <= max)
-  }
-
 
   function applyFilter(){
 
     
-    console.log('inventory', filteredInventory)
-
+    //rarity filter
     const data = [...filteredInventory]
     const rarityResult = selectFilter.rarity === 'all' ? data : data.filter(item => item.rarity.value === selectFilter.rarity)
 
+    //search filter
     console.log('search string', selectFilter.query)
     const searchResult = rarityResult.filter(item => item.name.toUpperCase().includes(selectFilter.query.toUpperCase()))
 
     //price filter
+    let priceResult = []
+    let hasPricefilter = false
 
-    // let priceResult = []
+    if(selectFilter.less_5 === true){
+      const result = searchResult.filter(i => i.price < 5)
+      priceResult.push(result)
+      hasPricefilter = true
+    }
 
-    // if(selectFilter.less_5 === true){
-      
-    // }
+    if(selectFilter.less_15 === true){
+      const result = searchResult.filter(i => i.price < 15 && i.price >= 5)
+      priceResult.push(result)
+      hasPricefilter = true
+    }
 
-    // if(selectFilter.less_15 === true){
-      
-    // }
+    if(selectFilter.less_35 === true){
+      const result = searchResult.filter(i => i.price < 35 && i.price >= 15)
+      priceResult.push(result)
+      hasPricefilter = true
+    }
 
-    // if(selectFilter.less_35 === true){
-      
-    // }
+    if(selectFilter.more_35 === true){
+      const result = searchResult.filter(i => i.price >= 35)
+      priceResult.push(result)
+      hasPricefilter = true
+    }
 
-    // if(selectFilter.more_35 === true){
-      
-    // }
+    if(selectFilter.custom_range1 !== null || selectFilter.custom_range2   !== null){
 
-    // if(selectFilter.custom_range1 === true || selectFilter.custom_range2 === true){
-      
-    // }
+      const [min, max] = validat_price_range(selectFilter.custom_range1, selectFilter.custom_range2)
+      const result = searchResult.filter(i => i.price <= max && i.price >= min)
+      priceResult.push(result)
+      hasPricefilter = true
+    }
 
-    // priceResult.flat()
+    priceResult = priceResult.flat()
 
-    return searchResult
-    
+    if(hasPricefilter === false){
+      priceResult = searchResult
+    }
+
+    return priceResult
   }
 
 
@@ -167,13 +173,17 @@ function Products(){
             Rarity
           </div>
 
-          <button className="filter_selector" onClick={() => setSelectFilter({...selectFilter, rarity: 'all'})}>All</button>
-          <button className="filter_selector" onClick={() => setSelectFilter({...selectFilter, rarity: 'epic'})}>Epic</button>
-          <button className="filter_selector" onClick={() => setSelectFilter({...selectFilter, rarity: 'rare'})}>Rare</button>
-          <button className="filter_selector" onClick={() => setSelectFilter({...selectFilter, rarity: 'uncommon'})}>Uncommon</button>
+          <button className={selectFilter.rarity === 'all' ? "filter_selector bg_skyblue": "filter_selector"} 
+          onClick={() => setSelectFilter({...selectFilter, rarity: 'all'})}>All</button>
+          <button className={selectFilter.rarity === 'epic' ? "filter_selector bg_gold": "filter_selector"} 
+          onClick={() => setSelectFilter({...selectFilter, rarity: 'epic'})}>Epic</button>
+          <button className={selectFilter.rarity === 'rare' ? "filter_selector bg_purple": "filter_selector"} 
+          onClick={() => setSelectFilter({...selectFilter, rarity: 'rare'})}>Rare</button>
+          <button className={selectFilter.rarity === 'uncommon' ? "filter_selector bg_green": "filter_selector"} 
+          onClick={() => setSelectFilter({...selectFilter, rarity: 'uncommon'})}>Uncommon</button>
         </div>
 
-        {/* <PricePicker selectFilter={selectFilter} setSelectFilter={setSelectFilter}/> */}
+        <PricePicker selectFilter={selectFilter} setSelectFilter={setSelectFilter} price_min={price_min} price_max={price_max} noFilter={noFilter}/>
 
         <div className="search_bar">
           <label>Search: </label>
@@ -185,7 +195,8 @@ function Products(){
       <div className="main_container">
 
         <div className="items_container">
-          {(applyFilter()).map((item) => {
+          {(applyFilter()).map(item => {
+
               return <div key={item.id} className='item_box'>
                         <h2>{item.name}</h2>
                         <div className="item_description">{capitalize(item.description)}</div>
@@ -202,6 +213,7 @@ function Products(){
                         }
                      </div>
           })}
+          {applyFilter().length === 0 && <h1>No item fits criteria</h1>}
         </div>
         
       </div>
@@ -210,7 +222,7 @@ function Products(){
   );
 };
 
-function PricePicker({selectFilter, setSelectFilter}){
+function PricePicker({selectFilter, setSelectFilter, price_min, price_max, noFilter}){
 
   function handlePriceRangeChange(e){
 
@@ -231,7 +243,7 @@ function PricePicker({selectFilter, setSelectFilter}){
         Price
       </div>
 
-      <form className="filter_price_container">
+      <div className="filter_price_container">
 
         <div className="filter_price_item">
           <input  id="less_5" type="checkbox" checked={selectFilter.less_5} value='less_5' onChange={handlePriceRangeChange}/>
@@ -254,18 +266,25 @@ function PricePicker({selectFilter, setSelectFilter}){
         </div>
 
 
-        {/* <div className="filter_price_custom">
-          <input name="price_picker_low" id="price_picker_low" type="number" min='1' max='999' placeholder="min" />
+        <div className="filter_price_custom">
+          <input ref={price_min} id="price_picker_low" type="number" min='1' max='999' placeholder="min" />
           <span>&nbsp; - &nbsp;</span>
-          <input name="price_picker_high" id="price_picker_high" type="number" min='2' placeholder="max" />
+          <input ref={price_max} id="price_picker_high" type="number" min='2' placeholder="max" />
         </div>
 
         <div className="price_filter_btn_container">
           <button className="reset_all_filter" onClick={() => setSelectFilter(noFilter)}>Reset</button>
-          <button className="apply_filter" onClick={e => filter_price(e)}>Apply</button>
-        </div> */}
+          <button className="apply_filter" onClick={() =>{
+          setSelectFilter({
+            ...selectFilter, 
+            custom_range1: parseInt(price_min.current.value), 
+            custom_range2: parseInt(price_max.current.value) 
+            })
+          }
+            }>Apply</button>
+        </div>
         
-      </form>
+      </div>
       
     </div>
   )
