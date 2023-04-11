@@ -15,7 +15,6 @@ const RouteSwitch = () => {
 
   const [authUser, setAuthUser] = useState({})
   const [cart, setCart] = useState([])
-  const [inventoryCopy, setInventoryCopy] = useState([])
   const [filteredInventory, setFilteredInventory] = useState([])
 
   return (
@@ -28,8 +27,6 @@ const RouteSwitch = () => {
         setCart, 
         authUser, 
         setAuthUser, 
-        inventoryCopy, 
-        setInventoryCopy, 
         filteredInventory, 
         setFilteredInventory, 
         }}>
