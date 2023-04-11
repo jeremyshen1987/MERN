@@ -43,7 +43,7 @@ input#price_picker_low, input#price_picker_high {
     max-width: 75px;
 }
 
-input#price_filter {
+#less_5, #less_15, #less_35, #more_35 {
     margin-right: 15px;
 }
 
