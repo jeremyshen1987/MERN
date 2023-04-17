@@ -46,6 +46,7 @@ function Products(){
         const itemsArr = responseJSON.data.items
     
         itemsArr.map(item => item.price = setPrice(item))
+        console.log(itemsArr)
         setFilteredInventory([...itemsArr])
 
       } catch(err){
@@ -128,7 +129,6 @@ function Products(){
 
   function applyFilter(){
 
-    
     //rarity filter
     const data = [...filteredInventory]
     const rarityResult = selectFilter.rarity === 'all' ? data : data.filter(item => item.rarity.value === selectFilter.rarity)
@@ -174,11 +174,23 @@ function Products(){
 
     priceResult = priceResult.flat()
 
+    //remove duplicates from custom price picker & preset filter
+
+    let finalResult = priceResult.reduce((arr, nextItem) =>{
+
+      const id_array = arr.map(i => i.id)
+
+      if(!id_array.includes(nextItem.id)){
+        return [...arr, nextItem]
+      }
+      return arr
+    }, [])
+
     if(hasPricefilter === false){
-      priceResult = searchResult
+      finalResult = searchResult
     }
 
-    return priceResult
+    return finalResult
   }
 
 
@@ -245,9 +257,6 @@ function Products(){
 function PricePicker({selectFilter, setSelectFilter, price_min, price_max, noFilter}){
 
   function handlePriceRangeChange(e){
-
-    console.log('name', e.target.value)
-    console.log('checked', e.target.checked)
 
     setSelectFilter({
       ...selectFilter,
