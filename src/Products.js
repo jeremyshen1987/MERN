@@ -25,25 +25,46 @@ function Products(){
   useEffect(() => {
     
     document.title = 'Products'
-    getItems()
+
+    const abortControl = new AbortController()
+
+    async function getItems(){
+
+      try{
+
+        console.log('fetching')
+        const response = await fetch('https://fortnite-api.com/v2/cosmetics/br/new',{
+          signal: abortControl.signal
+        })
     
-  }, [])
+        if(response.status !== 200){
+          alert('Error occured while retrive items') 
+          return
+        }
+    
+        const responseJSON = await response.json()
+        const itemsArr = responseJSON.data.items
+    
+        itemsArr.map(item => item.price = setPrice(item))
+        setFilteredInventory([...itemsArr])
 
-  async function getItems(){
+      } catch(err){
 
-
-    const response = await fetch('https://fortnite-api.com/v2/cosmetics/br/new')
-
-    if(response.status !== 200){
-      return 'Error occured while retrive items'
+        if(err.name === 'AbortError'){
+          alert('too many fetch req')
+        }
+      }
     }
 
-    const responseJSON = await response.json()
-    const itemsArr = responseJSON.data.items
+    getItems()
 
-    itemsArr.map(item => item.price = setPrice(item))
-    setFilteredInventory([...itemsArr])
-  }
+    return ()=>{
+      abortControl.abort()
+    }
+
+  }, [])
+
+
 
   //item object fetched from API doesn't contain pricing. Set a random price based on rarity
   function setPrice(item){
@@ -113,7 +134,6 @@ function Products(){
     const rarityResult = selectFilter.rarity === 'all' ? data : data.filter(item => item.rarity.value === selectFilter.rarity)
 
     //search filter
-    console.log('search string', selectFilter.query)
     const searchResult = rarityResult.filter(item => item.name.toUpperCase().includes(selectFilter.query.toUpperCase()))
 
     //price filter
